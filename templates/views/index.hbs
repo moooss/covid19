@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+
+{{>head}}
+
+<body>
+    <div class="main-content">
+        {{>header}}
+
+        <canvas id="myChart" width="400" height="400"></canvas>
+
+    </div>
+
+    {{>footer}}
+
+    <script src="/js/chart.min.js"></script>
+    <script src="/js/app.js"></script>
+
+    <script>
+    
+      var ctx = document.getElementById('myChart');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: {{{json labels}}},
+              datasets: [{
+                  label: '{{name0}}',
+                  data: {{{json data0}}},
+                  backgroundColor: '{{color0}}',
+                  borderColor: '{{color0}}'
+              },
+              {
+                  label: '{{name1}}',
+                  data: {{{json data1}}},
+                  backgroundColor: '{{color1}}',
+                  borderColor: '{{color1}}'
+              },
+              {
+                  label: '{{name2}}',
+                  data: {{{json data2}}},
+                  backgroundColor: '{{color2}}',
+                  borderColor: '{{color2}}'
+              }]
+
+          },
+          options: {
+
+          }
+      });
+    </script>
+</body>
+
+</html>
