@@ -79,7 +79,7 @@ app.get('', (req, res) => {
 
   const title = "Covid 19 stats"
 
-  
+  //color picker : https://simonwep.github.io/pickr/
   res.render('index', {
     title: title,
     name: 'moooss',
