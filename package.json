@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chart.js": "^3.0.0-alpha",
     "csv-parse": "^4.8.8",
     "express": "^4.17.1",
     "hbs": "^4.1.0"
