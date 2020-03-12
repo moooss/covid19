@@ -77,11 +77,8 @@ const countryData = [
 // GET
 app.get('', (req, res) => {
 
-  const title = "Covid 19 stats"
-
   //color picker : https://simonwep.github.io/pickr/
   res.render('index', {
-    title: title,
     name: 'moooss',
     labels: countryData[0].labels,
     name0: countryData[0].country,

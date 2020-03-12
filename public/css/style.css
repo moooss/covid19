@@ -15,20 +15,27 @@ body {
 }
 
 footer {
-  color: #888888;
+  color: #aaa;
   border-top: 1px solid #eeeeee;
   margin-top: 16px;
   padding: 16px 0;
+  text-align: center
 }
 
 header {
   margin-top: 16px;
-  margin-bottom: 48px;
+  margin-bottom: 15px;
 }
 
 h1 {
-  font-size: 48px;
-  margin-bottom: 16px;
+  font-size: 40px;
+  margin-bottom: 0;
+  text-align: center;
+}
+h2 {
+  font-size: 28px;
+  color: #aaa;
+  margin: 0 auto 5px;
   text-align: center;
 }
 
@@ -36,20 +43,4 @@ header a {
   color: #888888;
   margin-right: 16px;
   text-decoration: none;
-}
-
-.portrait {
-  width: 250px;
-}
-
-input[type='text'] {
-  width: 350px;
-  height: 25px;
-  background-color: #eee;
-}
-input[type='submit'] {
-  height: 31px;
-  background-color: rgb(27, 149, 224);
-  color: white;
-
 }
