@@ -3,6 +3,7 @@ const express = require('express')
 const hbs = require('hbs')
 const fs = require('fs')
 const path = require('path')
+const axios = require('axios')
 
 
 function getCountry(countryName, data) {
@@ -58,21 +59,24 @@ hbs.registerHelper('json', function(context) {
 });
 
 // MAIN
-const csvContents = fs.readFileSync('data/time_series_19-covid-Confirmed.csv');
+//const csvContents = fs.readFileSync('data/time_series_19-covid-Confirmed.csv');
+axios.get(this.url).then((response) => {
 
-const csvData = parse(csvContents, {
-  columns: true,
-  skip_empty_lines: true
+  const csvData = parse(response.data, {
+    columns: true,
+    skip_empty_lines: true
+  })
+  
+  
+  const countries = ['Spain', 'France', 'Italy']
+  
+  const countryData = [
+    parseCounrty(getCountry(countries[0], csvData)),
+    parseCounrty(getCountry(countries[1], csvData)),
+    parseCounrty(getCountry(countries[2], csvData))
+  ]
 })
 
-
-const countries = ['Spain', 'France', 'Italy']
-
-const countryData = [
-  parseCounrty(getCountry(countries[0], csvData)),
-  parseCounrty(getCountry(countries[1], csvData)),
-  parseCounrty(getCountry(countries[2], csvData))
-]
 
 // GET
 app.get('', (req, res) => {
