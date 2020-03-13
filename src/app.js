@@ -60,7 +60,8 @@ hbs.registerHelper('json', function(context) {
 
 // MAIN
 //const csvContents = fs.readFileSync('data/time_series_19-covid-Confirmed.csv');
-axios.get(this.url).then((response) => {
+const url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+axios.get(url).then((response) => {
 
   const csvData = parse(response.data, {
     columns: true,
@@ -68,38 +69,45 @@ axios.get(this.url).then((response) => {
   })
   
   
-  const countries = ['Spain', 'France', 'Italy']
+  const countries = ['Spain', 'France', 'Germany']
+  const colors = ['rgba(0, 150, 136, 0.75)', 'rgba(255, 193, 7, 1)', 'rgba(255, 235, 59, 0.75)', 'rgba(0, 235, 59, 0.75)']
   
-  const countryData = [
-    parseCounrty(getCountry(countries[0], csvData)),
-    parseCounrty(getCountry(countries[1], csvData)),
-    parseCounrty(getCountry(countries[2], csvData))
-  ]
-})
-
-
-// GET
-app.get('', (req, res) => {
-
-  //color picker : https://simonwep.github.io/pickr/
-  res.render('index', {
-    name: 'moooss',
-    labels: countryData[0].labels,
-    name0: countryData[0].country,
-    data0: countryData[0].data,
-    color0: 'rgba(0, 150, 136, 0.75)',
-    
-    name1: countryData[1].country,
-    data1: countryData[1].data,
-    color1: 'rgba(255, 193, 7, 1)',
-
-    name2: countryData[2].country,
-    data2: countryData[2].data,
-    color2: 'rgba(255, 235, 59, 0.75)',
-
+  //const countryData = []
+  let dataset = []
+  let i = 0
+  let dataLabels
+  countries.forEach((country) => {
+    let tempCountry = parseCounrty(getCountry(country, csvData))
+    let tempDataset = {
+      label: country,
+      data: tempCountry.data,
+      backgroundColor: colors[i],
+      borderColor: colors[i]
+    }
+    i++
+    dataset.push(tempDataset)
+    dataLabels = tempCountry.labels
   })
   
+//console.log(countryData)
+  let datasets
+
+  // GET
+  app.get('', (req, res) => {
+
+    //color picker : https://simonwep.github.io/pickr/
+    res.render('index', {
+      name: 'moooss',
+      dataLabels: dataLabels,
+      dataset: dataset
+
+    })
+    
+  })
 })
+
+
+
 
 // EXPRESS INIT
 app.listen(port, () => {

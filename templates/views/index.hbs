@@ -22,25 +22,8 @@
       var myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: {{{json labels}}},
-              datasets: [{
-                  label: '{{name0}}',
-                  data: {{{json data0}}},
-                  backgroundColor: '{{color0}}',
-                  borderColor: '{{color0}}'
-              },
-              {
-                  label: '{{name1}}',
-                  data: {{{json data1}}},
-                  backgroundColor: '{{color1}}',
-                  borderColor: '{{color1}}'
-              },
-              {
-                  label: '{{name2}}',
-                  data: {{{json data2}}},
-                  backgroundColor: '{{color2}}',
-                  borderColor: '{{color2}}'
-              }]
+            labels: {{{json dataLabels}}},
+            datasets: {{{json dataset}}}
 
           },
           options: {
