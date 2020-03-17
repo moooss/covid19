@@ -28,7 +28,7 @@ app.listen(port, () => {
   console.log('Server is up on port ' + port)
 })
 
-const countries = ['Italy','France','Spain','Germany', 'Switzerland', 'Denmark', 'United Kingdom']
+const countries = ['Italy','France','Spain','Germany', 'Switzerland', 'Denmark', 'United Kingdom', 'China']
 const colors = ['rgb(52, 74, 94)', 'rgb(45, 204, 112)', 'rgb(42, 128, 185)', 'rgb(155, 88, 181)', 'rgb(241, 196, 16)', 'rgb(231, 126, 34)', 'rgb(232, 76, 61)', 'rgb(35, 188, 154)']
 
 // RENDER INTERFACE
@@ -46,7 +46,7 @@ app.get('/data', (req, res) => {
   const type      = req.query.type
 
 	try {
-    console.log('get data')
+    console.log('get data :', type)
 
     const data = new Data()
     data.getData(type, countries, colors).then((result) => {

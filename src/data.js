@@ -53,44 +53,65 @@ class Data {
   * get raw data for one country
   */
   _getCountry(countryName, data) {
-    for (var i = 0; i < data.length; i++){
+    // get different regions
+    let regionsData = []
+    for (let i = 0; i < data.length; i++){
       if (data[i]['Country/Region'] !== undefined && data[i]['Country/Region'].replace(' ','-').toLowerCase() == countryName){
-        return data[i]
+        const regionData = Object.entries(data[i])
+        const regionDataFiltered = []
+
+        // filter fields other than dates
+        for (let j = 0; j < regionData.length; j++) {
+          const date  = regionData[j][0]
+          const value = regionData[j][1]
+          if (date.match(/([0-9]+\/[0-9]+\/[0-9]+)/i)) {
+            regionDataFiltered.push({date, value})
+          }
+        }
+        regionsData.push(regionDataFiltered)
       }
     }
+
+    // init countryData
+    let countryData = []
+    for (let j=0; j < regionsData[0].length; j++) {
+      const date  = regionsData[0][j].date
+      const value =  regionsData[0][j].value
+      countryData.push({date, value: 0})
+    }
+    
+    // sum values for all regions and all dates
+    for (let i=0; i < regionsData.length; i++) {
+      for (let j=0; j < regionsData[i].length; j++) {
+        countryData[j].value =  parseInt(regionsData[i][j].value) + countryData[j].value
+      }
+    }
+    return {name: countryName, data: countryData}
   }
 
   /*
   * _formatCountryData
-  * get formated data
+  * get formated data fort charting
   */
   _formatCountryData(countryData) {
     let data = {
-      country: countryData['Country/Region'],
-      state: countryData['Province/State'],
-      geo: {lat: countryData.Lat, lng: countryData.Long},
+      country: countryData.Name,
       labels: [],
       data: []
     }
 
-    delete countryData['Province/State']
-    delete countryData['Country/Region']
-    delete countryData.Lat
-    delete countryData.Long
-
-    const statsRaw = Object.entries(countryData)
-    const lastStatRaw = statsRaw[statsRaw.length-1]
-
     let arrayData = []
     let arrayLabels = []
-    for (const [date, value] of statsRaw) {
+    for (let i=0; i < countryData.data.length; i++) {
+      const date  = countryData.data[i].date
+      const value = countryData.data[i].value
       if (new Date(date) > new Date('2020/02/25')) {
         arrayData.push({x: new Date(date), y: value})
         arrayLabels.push(date)
       }
     }
 
-    data.lastValue = lastStatRaw[1]
+    data.lastValue = countryData.data[countryData.data.length-1].value
     data.data = arrayData
     data.labels = arrayLabels
     return data
