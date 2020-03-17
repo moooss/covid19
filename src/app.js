@@ -17,9 +17,6 @@ hbs.registerPartials(path.join(__dirname, '../templates/partials'))
 hbs.registerHelper('json', function(context) {
   return JSON.stringify(context);
 });
-hbs.registerHelper('lessthan3', function (value) {
-  return (value < 3);
-});
 hbs.registerHelper('color', function (index) {
   return colors[index];
 });

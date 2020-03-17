@@ -16,6 +16,27 @@ const getSelectedCountries = () => {
   return countries
 }
 
+const saveCountries = (countries) => {
+  if (typeof(Storage) !== "undefined") {
+    window.localStorage.setItem('countries', JSON.stringify(countries))
+  } else {
+    // No web storage Support.
+  }
+}
+
+const initCountries = () => {
+  let countriesDefault = ['france', 'italy', 'spain']
+  let countries
+  if (typeof(Storage) !== "undefined") {
+    countries = JSON.parse(window.localStorage.getItem('countries'));
+  }
+  console.log(countries)
+  countries = countries ? countries : countriesDefault
+  console.log(countries)
+  countries.forEach((country) => {
+    $('#'+country).prop('checked', true)
+  })
+}
 
 const init = (charts) => {
   const Promise1 = axios.get('/data?type=' + 'confirmed' + '&' + getQueryString())
@@ -27,7 +48,6 @@ const init = (charts) => {
 
       // init blocks
       for (const data of responses[0].data.data) {
-        console.log(data.label)
         $('.block_' + data.label.replace(' ', '_').toLowerCase() + ' > .content > .stats > .confirmed > .number').text(data.lastValue)
       }
       for (const data of responses[1].data.data) {
@@ -76,6 +96,7 @@ const charts = [
   {id: 'myChart2', label: 'Deaths',         type: 'deaths'},
 ]
 
+initCountries()
 init(charts)
 
 
@@ -86,13 +107,14 @@ $( document ).ready(function() {
   // on country select
   $('.checkbox').click(function() {
     let countries = getSelectedCountries()
+    saveCountries(countries)
     console.log('clic')
 
 
     // filter data and update
-    myChartCfg['myChart1'].data.datasets = myChartDatasets['myChart1'].filter(dataset => getSelectedCountries().indexOf(dataset.label) != -1)
+    myChartCfg['myChart1'].data.datasets = myChartDatasets['myChart1'].filter(dataset => countries.indexOf(dataset.label) != -1)
     myChart['myChart1'].update()
-    myChartCfg['myChart2'].data.datasets = myChartDatasets['myChart2'].filter(dataset => getSelectedCountries().indexOf(dataset.label) != -1)
+    myChartCfg['myChart2'].data.datasets = myChartDatasets['myChart2'].filter(dataset => countries.indexOf(dataset.label) != -1)
     myChart['myChart2'].update()
     
   })
