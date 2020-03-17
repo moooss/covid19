@@ -8,29 +8,54 @@
     <div class="main-content">
         {{>header}}
 
-        <canvas id="myChart" width="400" height="300"></canvas>
+        <ul id="country-selector">
+          {{#each countries}}
+            <li><input type="checkbox" id="{{this}}"  name="{{this}}"  checked {{#if (lessthan3 @index)}}checked{{/if}} hidden><label for="{{this}}">{{this}}</label></li>
+          {{/each}}
+
+        </ul>
+        <div class="container">
+          <div class="charts">
+            <div class="chart">
+              <canvas id="myChart1" width="800" height="500"></canvas>
+            </div>
+            <div class="chart" >
+              <canvas id="myChart2" width="800" height="500"></canvas>
+            </div>
+          </div>
+
+          <div class="country-blocks">
+            {{#each countries}}
+              <div class="block block_{{this}}" style="background-color:{{color @index}}">
+                <div class="content">
+                  <div class="name">{{this}}</div>
+                  <div class="stats">
+                    <div class="stat confirmed">
+                      <div class="title">Confirmed</div>
+                      <div class="number">-</div>
+                    </div>
+                    <div class="stat deaths">
+                      <div class="title">Deaths</div>
+                      <div class="number">-</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+        
+        
 
     </div>
 
     {{>footer}}
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/app.js"></script>
 
-    <script>
-    
-      var ctx = document.getElementById('myChart');
-      var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: {{{json dataLabels}}},
-            datasets: {{{json dataset}}}
-
-          },
-          options: {
-
-          }
-      });
-    </script>
 </body>
 
 </html>

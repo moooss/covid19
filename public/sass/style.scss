@@ -1,0 +1,144 @@
+$color-bleu:   #4285f4;
+$color-white:  #ffffff;
+$color-bg:     #3E3F40;
+$color-border: #292929;
+$color-chart-bg: rgb(92, 93, 98);
+
+body {
+  color: #333333;
+  background-color: $color-bg;
+  font-family: 'Lato', sans-serif;
+  
+  margin: 0 auto;
+  padding: 0 16px;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+footer {
+  color: #aaa;
+  border-top: 1px solid #888;
+  margin-top: 16px;
+  padding: 16px 0;
+  text-align: center
+}
+
+header {
+  margin-top: 16px;
+  margin-bottom: 15px;
+}
+
+h1 {
+  color: $color-white;
+  font-size: 40px;
+  margin-bottom: 0;
+  text-align: center;
+}
+h2 {
+  font-size: 28px;
+  color: #aaa;
+  margin: 0 auto 5px;
+  text-align: center;
+}
+
+header a {
+  color: #888888;
+  margin-right: 16px;
+  text-decoration: none;
+}
+
+canvas {
+  margin-bottom: 20px;
+}
+
+ul#country-selector {
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  display: flex; 
+  padding: 10px;
+
+  li {
+    margin: auto 10px;
+
+    label {
+      text-transform: uppercase;
+      font-size: 0.8em;
+      border: 1px solid $color-bleu;
+      background-color: $color-bg;
+      color: $color-bleu;
+      border-radius: 3px;
+      padding: 5px 10px;
+      cursor: pointer;
+      box-shadow: 0 0.15em 0.3em rgba(100, 100, 100, 0.4);
+    }
+    input:checked ~ label {
+      background-color: $color-bleu;
+      color: $color-white;
+    }
+  }
+}
+
+.container {
+  display:flex;
+}
+
+.charts {
+  width: calc(70% - 20px);
+  padding: 20px;
+  .chart {
+    background-color: $color-chart-bg;
+    border: 1px solid $color-border;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+}
+
+.country-blocks {
+  width: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: flex-start;
+  margin-top: 20px;
+
+  .block {
+    width: 49%;
+    min-width: 150px;
+    margin: 1px;
+    color: #fff;
+    text-align: center;
+    align-self: flex-start;
+    .content {
+      margin: 20px auto;
+      .name {
+        font-size: 1.1em;
+        text-transform: uppercase;
+      }
+      .stats {
+        display: flex;
+        justify-content: center;
+        .stat {
+          text-align: center;
+          margin: 10px 10px;
+          .title {
+            font-size: 0.6em;
+            text-transform: uppercase;
+          }
+          .number {
+            font-size: 1.5em;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+

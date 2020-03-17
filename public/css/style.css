@@ -1,46 +1,108 @@
 body {
   color: #333333;
-  font-family: arial;
-  max-width: 650px;
+  background-color: #3E3F40;
+  font-family: 'Lato', sans-serif;
   margin: 0 auto;
   padding: 0 16px;
-
   display: flex;
   flex-direction: column;
-  min-height: 100vh
-}
+  min-height: 100vh; }
 
 .main-content {
-  flex-grow: 1;
-}
+  flex-grow: 1; }
 
 footer {
   color: #aaa;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid #888;
   margin-top: 16px;
   padding: 16px 0;
-  text-align: center
-}
+  text-align: center; }
 
 header {
   margin-top: 16px;
-  margin-bottom: 15px;
-}
+  margin-bottom: 15px; }
 
 h1 {
+  color: #ffffff;
   font-size: 40px;
   margin-bottom: 0;
-  text-align: center;
-}
+  text-align: center; }
+
 h2 {
   font-size: 28px;
   color: #aaa;
   margin: 0 auto 5px;
-  text-align: center;
-}
+  text-align: center; }
 
 header a {
   color: #888888;
   margin-right: 16px;
-  text-decoration: none;
-}
+  text-decoration: none; }
+
+canvas {
+  margin-bottom: 20px; }
+
+ul#country-selector {
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  display: flex;
+  padding: 10px; }
+  ul#country-selector li {
+    margin: auto 10px; }
+    ul#country-selector li label {
+      text-transform: uppercase;
+      font-size: 0.8em;
+      border: 1px solid #4285f4;
+      background-color: #3E3F40;
+      color: #4285f4;
+      border-radius: 3px;
+      padding: 5px 10px;
+      cursor: pointer;
+      box-shadow: 0 0.15em 0.3em rgba(100, 100, 100, 0.4); }
+    ul#country-selector li input:checked ~ label {
+      background-color: #4285f4;
+      color: #ffffff; }
+
+.container {
+  display: flex; }
+
+.charts {
+  width: calc(70% - 20px);
+  padding: 20px; }
+  .charts .chart {
+    background-color: #5c5d62;
+    border: 1px solid #292929;
+    padding: 15px;
+    margin-bottom: 20px; }
+
+.country-blocks {
+  width: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: flex-start;
+  margin-top: 20px; }
+  .country-blocks .block {
+    width: 49%;
+    min-width: 150px;
+    margin: 1px;
+    color: #fff;
+    text-align: center;
+    align-self: flex-start; }
+    .country-blocks .block .content {
+      margin: 20px auto; }
+      .country-blocks .block .content .name {
+        font-size: 1.1em;
+        text-transform: uppercase; }
+      .country-blocks .block .content .stats {
+        display: flex;
+        justify-content: center; }
+        .country-blocks .block .content .stats .stat {
+          text-align: center;
+          margin: 10px 10px; }
+          .country-blocks .block .content .stats .stat .title {
+            font-size: 0.6em;
+            text-transform: uppercase; }
+          .country-blocks .block .content .stats .stat .number {
+            font-size: 1.5em; }
