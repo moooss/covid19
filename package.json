@@ -15,7 +15,6 @@
     "csv-parse": "^4.8.8",
     "express": "^4.17.1",
     "hbs": "^4.1.0",
-    "node-sass": "^4.13.1",
-    "nodemailer": "^6.4.5"
+    "node-sass": "^4.13.1"
   }
 }
