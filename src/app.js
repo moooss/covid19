@@ -31,8 +31,8 @@ app.listen(port, () => {
   console.log('Server is up on port ' + port)
 })
 
-const countries = ['France','Italy','Spain','Germany', 'Switzerland', 'Denmark', 'United Kingdom']
-const colors = ['rgb(45, 204, 112)', 'rgb(52, 74, 94)', 'rgb(42, 128, 185)', 'rgb(155, 88, 181)', 'rgb(241, 196, 16)', 'rgb(231, 126, 34)', 'rgb(232, 76, 61)', 'rgb(35, 188, 154)']
+const countries = ['Italy','France','Spain','Germany', 'Switzerland', 'Denmark', 'United Kingdom']
+const colors = ['rgb(52, 74, 94)', 'rgb(45, 204, 112)', 'rgb(42, 128, 185)', 'rgb(155, 88, 181)', 'rgb(241, 196, 16)', 'rgb(231, 126, 34)', 'rgb(232, 76, 61)', 'rgb(35, 188, 154)']
 
 // RENDER INTERFACE
 app.get('', (req, res) => {

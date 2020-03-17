@@ -10,7 +10,7 @@
 
         <ul id="country-selector">
           {{#each countries}}
-            <li><input type="checkbox" id="{{this}}"  name="{{this}}"  checked {{#if (lessthan3 @index)}}checked{{/if}} hidden><label for="{{this}}">{{this}}</label></li>
+            <li><input class="checkbox" type="checkbox" id="{{this}}"  name="{{this}}"  {{#if (lessthan3 @index)}}checked{{/if}} hidden><label for="{{this}}">{{this}}</label></li>
           {{/each}}
 
         </ul>

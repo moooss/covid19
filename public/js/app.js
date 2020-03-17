@@ -1,60 +1,66 @@
 const getQueryString = () => {
   let queryStr = ''
   $('#country-selector').children().each(function(i) {
-    if ($(this).find('input').prop('checked')) {
-      queryStr += 'countries[]=' + $(this).find('input').attr('id') + '&'
-    }
+    queryStr += 'countries[]=' + $(this).find('input').attr('id') + '&'
   })
   return queryStr
 }
 
-const initGraph = (chartId, chartLabel, chartType) => {
-
-  axios.get('/data?type=' + chartType + '&' + getQueryString())
-  .then((response)=> {
-
-    myChartDatasets[chartId] = response.data.data
-
-    myChartCfg[chartId] = {
-      type: 'line',
-      data: {
-        labels: response.data.dataLabels,
-        datasets: myChartDatasets[chartId]
-
-      },
-      options: {
-        title: {
-          display: true,
-          text: chartLabel
-        },
-        legend: {
-          position: 'top',
-          align: 'center'
-        }
-      }
+const getSelectedCountries = () => {
+  let countries = []
+  $('#country-selector').children().each(function(i) {
+    if ($(this).find('input').prop('checked')) {
+      countries.push($(this).find('input').attr('id'))
     }
-    
-    ctx = document.getElementById(chartId)
-    Chart.defaults.global.defaultFontColor = '#ccc';
-    myChart[chartId]    = new Chart(ctx, myChartCfg[chartId])
-
   })
-
-  
+  return countries
 }
 
-const initBlocks = () => {
+
+const init = (charts) => {
   const Promise1 = axios.get('/data?type=' + 'confirmed' + '&' + getQueryString())
   const Promise2 = axios.get('/data?type=' + 'deaths' + '&' + getQueryString())
 
+  
   Promise.all([Promise1, Promise2])
-    .then((response)=> {
-      for (const data of response[0].data.data) {
+    .then((responses)=> {
+
+      // init blocks
+      for (const data of responses[0].data.data) {
         console.log(data.label)
         $('.block_' + data.label.replace(' ', '_').toLowerCase() + ' > .content > .stats > .confirmed > .number').text(data.lastValue)
       }
-      for (const data of response[1].data.data) {
+      for (const data of responses[1].data.data) {
         $('.block_' + data.label.replace(' ', '_').toLowerCase() + ' > .content > .stats > .deaths > .number').text(data.lastValue)
+      }
+
+
+      // init charts
+      for (const [i, response] of responses.entries()) {
+        const chart = charts[i]
+        myChartDatasets[chart.id] = response.data.data
+
+        myChartCfg[chart.id] = {
+          type: 'line',
+          data: {
+            labels: response.data.dataLabels,
+            datasets: myChartDatasets[chart.id].filter(dataset => getSelectedCountries().indexOf(dataset.label) != -1)
+
+          },
+          options: {
+            title: {
+              display: true,
+              text: chart.label
+            },
+            legend: {
+              position: 'top',
+              align: 'center'
+            }
+          }
+        }
+        ctx = document.getElementById(chart.id)
+        Chart.defaults.global.defaultFontColor = '#ccc';
+        myChart[chart.id]    = new Chart(ctx, myChartCfg[chart.id])
       }
     })
 }
@@ -65,13 +71,12 @@ let myChart = []
 let myChartCfg = []
 let myChartDatasets = []
 
-const chartId1 = 'myChart1'
-const chartId2 = 'myChart2'
+const charts = [
+  {id: 'myChart1', label: 'Infected Cases', type: 'confirmed'},
+  {id: 'myChart2', label: 'Deaths',         type: 'deaths'},
+]
 
-initGraph(chartId1, 'Infected Cases', 'confirmed')
-initGraph(chartId2, 'Deaths', 'deaths')
-
-initBlocks()
+init(charts)
 
 
 
@@ -79,21 +84,16 @@ initBlocks()
 $( document ).ready(function() {
 
   // on country select
-  $('#country-selector').click(function() {
-    let countries = []
+  $('.checkbox').click(function() {
+    let countries = getSelectedCountries()
     console.log('clic')
-    $('#country-selector').children().each(function(i) {
-      console.log('each')
-      if ($(this).find('input').prop('checked')) {
-        countries.push($(this).find('input').attr('id'))
-      }
-    })
+
 
     // filter data and update
-    myChartCfg[chartId1].data.datasets = myChartDatasets[chartId1].filter(dataset => countries.indexOf(dataset.label) != -1)
-    myChart[chartId1].update()
-    myChartCfg[chartId2].data.datasets = myChartDatasets[chartId2].filter(dataset => countries.indexOf(dataset.label) != -1)
-    myChart[chartId2].update()
+    myChartCfg['myChart1'].data.datasets = myChartDatasets['myChart1'].filter(dataset => getSelectedCountries().indexOf(dataset.label) != -1)
+    myChart['myChart1'].update()
+    myChartCfg['myChart2'].data.datasets = myChartDatasets['myChart2'].filter(dataset => getSelectedCountries().indexOf(dataset.label) != -1)
+    myChart['myChart2'].update()
     
   })
 
