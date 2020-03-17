@@ -1,3 +1,5 @@
-## COVID19 graph
+## COVID19 Charts
 
-Watch the virus spread progression for France, Spain and Italy
+Watch the virus spread progression for countries in Europe
+
+https://moooss-covid19.herokuapp.com/
