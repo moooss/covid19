@@ -24,6 +24,10 @@ const saveCountries = (countries) => {
   }
 }
 
+const numberWithSpaces = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
 const initCountries = () => {
   let countriesDefault = ['france', 'italy', 'spain']
   let countries
@@ -48,10 +52,10 @@ const init = (charts) => {
 
       // init blocks
       for (const data of responses[0].data.data) {
-        $('.block_' + data.label.replace(' ', '_').toLowerCase() + ' > .content > .stats > .confirmed > .number').text(data.lastValue)
+        $('.block_' + data.label.replace(' ', '_').toLowerCase() + ' > .content > .stats > .confirmed > .number').text(numberWithSpaces(data.lastValue))
       }
       for (const data of responses[1].data.data) {
-        $('.block_' + data.label.replace(' ', '_').toLowerCase() + ' > .content > .stats > .deaths > .number').text(data.lastValue)
+        $('.block_' + data.label.replace(' ', '_').toLowerCase() + ' > .content > .stats > .deaths > .number').text(numberWithSpaces(data.lastValue))
       }
 
 
